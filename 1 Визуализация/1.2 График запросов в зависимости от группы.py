@@ -13,8 +13,12 @@ df['datetime'] = pd.to_datetime(df['datetime'])
 # Создание нового столбца 'status_group' на основе первой цифры статуса HTTP
 df['status_group'] = df['status'].astype(str).str[0]
 
+# Фильтрация данных только для определенных статусов
+status_to_plot = ['2', '3', '4', '5']
+df_filtered = df[df['status_group'].isin(status_to_plot)]
+
 # Группировка по времени (по часам) и статусу, подсчет количества запросов
-requests_per_hour_group = df.groupby([df['datetime'].dt.hour, 'status_group'])['status_group'].count()
+requests_per_hour_group = df_filtered.groupby([df_filtered['datetime'].dt.hour, 'status_group'])['status_group'].count()
 
 # Построение графиков
 groups = requests_per_hour_group.index.get_level_values('status_group').unique()

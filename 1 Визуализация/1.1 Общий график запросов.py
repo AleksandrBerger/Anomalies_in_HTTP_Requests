@@ -10,17 +10,14 @@ df = pd.read_csv(output_file, usecols=usecols)
 # Преобразование столбца 'datetime' в формат даты и времени
 df['datetime'] = pd.to_datetime(df['datetime'])
 
-# Группировка по времени (по часам) и подсчет количества запросов
-requests_per_hour = df.groupby(df['datetime'].dt.hour)['datetime'].count()
+# Группировка по времени с шагом в 10 минут и подсчет количества запросов
+requests_per_10_minutes = df.groupby(pd.Grouper(key='datetime', freq='10T')).size()
 
 # Построение графика
-plt.plot(requests_per_hour.index, requests_per_hour.values)
-plt.xlabel('Hour of the day')
+plt.plot(requests_per_10_minutes.index, requests_per_10_minutes.values)
+plt.xlabel('Time')
 plt.ylabel('Number of requests')
-plt.title('Requests per hour')
+plt.title('Requests per 10 minutes')
 plt.grid(True)
-
-# Изменение шкалы на графике
-plt.ticklabel_format(style='plain')
 
 plt.show()
