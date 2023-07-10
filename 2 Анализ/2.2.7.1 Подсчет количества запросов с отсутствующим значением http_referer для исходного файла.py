@@ -16,6 +16,3 @@ row_count = len(filtered_df)
 
 # Вывод результата
 print("Количество строк с http_referer равным '-':", row_count)
-
-#Результат выполнения:
-#Количество строк с http_referer равным '-': 390239
