@@ -19,7 +19,8 @@ status_to_plot = ['2', '3', '4', '5']
 df_filtered = df[df['status_group'].isin(status_to_plot)]
 
 # Group by time (in 15-minute intervals) and status, count the number of requests
-requests_per_hour_group = df_filtered.groupby([pd.Grouper(key='datetime', freq='15Min'), 'status_group'])['status_group'].count()
+requests_per_hour_group = df_filtered.groupby([pd.Grouper(key='datetime', freq='15Min'), 'status_group'])
+['status_group'].count()
 
 # Plotting
 groups = requests_per_hour_group.index.get_level_values('status_group').unique()
